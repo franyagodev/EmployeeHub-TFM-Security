@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: employee-service
+
+  config:
+    import: "optional:configserver:http://config-server:8088" # Correcto: usa el nombre del servicio
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/employee_db
+    username: root
+    password: 123456abc
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+server:
+  port: 8090
