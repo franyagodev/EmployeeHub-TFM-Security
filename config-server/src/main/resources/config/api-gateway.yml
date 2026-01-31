@@ -1,0 +1,44 @@
+server:
+  port: 8060
+
+eureka:
+  client:
+    serviceUrl:
+      # Dentro de Docker, usamos el nombre del servicio definido en docker-compose
+      defaultZone: http://service-registry:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: auth-service
+              uri: lb://AUTH-SERVICE
+              predicates:
+                - Path=/api/v1/auth/**
+
+            - id: employee-service
+              uri: lb://EMPLOYEE-SERVICE
+              predicates:
+                - Path=/api/v1/employees/**
+
+            - id: department-service
+              uri: lb://DEPARTMENT-SERVICE
+              predicates:
+                - Path=/api/v1/departments/**
+
+            - id: city-service
+              uri: lb://CITY-SERVICE
+              predicates:
+                - Path=/api/v1/cities/**
+
+# Configuración opcional para ver logs detallados de las rutas en la consola
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.http.server.reactive: DEBUG
+    org.springframework.web.reactive: DEBUG
+    reactor.netty: DEBUG
