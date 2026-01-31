@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: api-gateway
+  config:
+    import: "optional:configserver:http://config-server:8088" # Correcto: usa el nombre del servicio
+
+server:
+  port: 8060
